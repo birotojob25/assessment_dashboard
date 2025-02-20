@@ -11,3 +11,7 @@ body {
     --radius: 0.5rem;
   }
 }
+
+.transition-width {
+  transition: width 0.3s;
+}
