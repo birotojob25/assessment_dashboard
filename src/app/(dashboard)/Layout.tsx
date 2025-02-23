@@ -1,11 +1,14 @@
-import RootLayout from "../layout";
-import "../globals.css";
-import { AppProps } from "next/app";
+import SidebarDemo from "@/components/Sidebar";
 
-export default function Layout({ Component, pageProps }: AppProps) {
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <RootLayout>
-      <Component {...pageProps} />
-    </RootLayout>
+    <div className="flex min-h-screen">
+      <SidebarDemo />
+      <main className="flex-1 p-6">{children}</main>
+    </div>
   );
 }

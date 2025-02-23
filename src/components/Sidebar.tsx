@@ -1,81 +1,86 @@
 "use client";
+import React, { useState } from "react";
+import { Sidebar, SidebarBody, SidebarLink } from "./ui/sidebar";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
 import {
-  LayoutDashboard,
-  NotebookPen,
-  LibraryBig,
-  Settings,
-  BadgeHelp,
-  LogOut,
-  Copyright
-} from "lucide-react";
+  IconBrandTabler,
+  IconSettings,
+  IconLibrary,
+  IconHelp,
+  IconContract,
+  IconCopyright,
+  IconLogout2,
+} from "@tabler/icons-react";
+import Dashboard from "../app/(dashboard)/Dashboard";
+import { cn } from "@/lib/utils";
 
-export default function Sidebar({isCollapsed} : {isCollapsed: boolean}) {
-  const pathname = usePathname();
-
-  const getStrokeColor = (link: string) => {
-    return pathname === link ? "text-blue-500" : "text-white";
-  };
-
-  const navItems = [
+export default function SidebarDemo() {
+   const [open, setOpen] = useState(false);
+   const pathname = usePathname();
+   
+  const links = [
     {
-      icon: <LayoutDashboard className={getStrokeColor("/")} size={24} />,
-      title: "Dashboard",
-      link: "/",
+      label: "Dashboard",
+      href: "/",
+      icon: <IconBrandTabler className="text-white flex-shrink-0" size={26} />,
     },
-
     {
-      icon: (
-        <NotebookPen className={getStrokeColor("/assessments")} size={24} />
-      ),
-      title: "Assessments",
-      link: "/assessments",
+      label: "Assessments",
+      href: "/assessments",
+      icon: <IconContract className="text-white flex-shrink-0" size={26} />,
     },
-
     {
-      icon: <LibraryBig className={getStrokeColor("/resources")} size={24} />,
-      title: "Resources",
-      link: "/resources",
+      label: "Resources",
+      href: "/resources",
+      icon: <IconLibrary className="text-white flex-shrink-0" size={26} />,
     },
-
     {
-      icon: <Settings className={getStrokeColor("/settings")} size={24} />,
-      title: "Settings",
-      link: "/settings",
+      label: "Settings",
+      href: "/settings",
+      icon: <IconSettings className="text-white flex-shrink-0" size={26} />,
     },
-
     {
-      icon: <BadgeHelp className={getStrokeColor("/help")} size={24} />,
-      title: "Help",
-      link: "/help",
+      label: "Help",
+      href: "/help",
+      icon: <IconHelp className="text-white flex-shrink-0" size={26} />,
     },
-
     {
-      icon: <LogOut className={getStrokeColor("/logout")} size={24} />,
-      title: "Logout",
-      link: "/logout",
+      label: "Logout",
+      href: "/logout",
+      icon: <IconLogout2 className="text-white flex-shrink-0" size={26} />,
     },
   ];
-  return (
-    <div className={`bg-[#0162C9] w-64 h-screen shadow-lg  ${isCollapsed ? "w-16" : "w-64"} transition-width duration-300`}>
-      <div className="flex flex-col gap-4 p-4">
-        {navItems.map((item, index) => (
-          <Link
-            key={index}
-            href={item.link}
-            className="flex gap-2 items-center ml-4 mt-4 text-white"
-          >
-            {item.icon}
-            <span>{item.title}</span>
-          </Link>
-        ))}
 
-        <div className="flex items-center ml-3 gap-2 mt-72 text-white">
-        <Copyright/>
-         Birotojob 2025
-        </div>
-      </div>
+  return (
+    <div
+      className={
+        cn("min-h-[60vh]  flex")
+        // for your use case, use `h-screen` instead of `h-[60vh]`
+      }
+    >
+      <Sidebar open={open} setOpen={setOpen}>
+        <SidebarBody className="justify-between gap-10 min-h-[90vh] overflow-hidden">
+          <div className="flex flex-col flex-1 overflow-y-auto px-4">
+            <div className="mt-3 flex flex-col gap-6">
+              {links.map((link, idx) => (
+                <SidebarLink key={idx} link={link} active={pathname === link.href} />
+              ))}
+            </div>
+          </div>
+          <div>
+            <div className="inline-block ml-4">
+              <IconCopyright size={26} className="text-white" />
+              <span className="text-white text-sm font-medium">
+                {new Date().getFullYear()}
+              </span>
+            </div>
+          </div>
+        </SidebarBody>
+      </Sidebar>
+      <Dashboard />
     </div>
   );
 }
+
+
+

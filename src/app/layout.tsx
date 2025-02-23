@@ -16,18 +16,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
+    <html lang="en">
       <body
         suppressHydrationWarning={true}
         className={cn(
-          "mx-auto min-h-dvh w-full antialised ",
-
+          "mx-auto min-h-dvh  w-full antialised ",
           quicksand.className
         )}
       >
         <Providers>
           {children}
-          <Toaster position='top-right' richColors />
+          <Toaster position="top-right" richColors />
         </Providers>
       </body>
     </html>
